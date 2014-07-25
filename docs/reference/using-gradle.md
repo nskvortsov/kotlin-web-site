@@ -41,13 +41,18 @@ The correspondence between milestones and versions is displayed below:
 
 ## Project Layout
 
-In the project, Kotlin sources should be located under a common root folder named *kotlin* which is also the root to the *java* folder for Java sources
+The Kotlin plugin default project layout is illustrated by the table below
 
-project
-  - main (root)
-    - kotlin
-    - java
+|  Directory | Meaning |
+|  --- | --- |
+| src/main/kotlin | Kotlin production sources |
+| src/main/resources | Production resources |
+| src/test/kotlin | Kotlin test sources |
+| src/test/resources | Test resources |
+| src/*sourceSetName*/kotlin | Kotlin sources for the given source set |
+| src/*sourceSetName*/resources | Resources for the given source set |
 
+Unlike Scala or Groovy plugins, java sources can not be place under *kotlin* directory. Please apply plugin *java* and use separate *java* directory.
 
 ## Configuring Dependencies
 
@@ -56,11 +61,12 @@ You need to add dependencies on kotlin-gradle-plugin and Kotlin standard library
 ``` groovy
 
 buildscript {
+  ext.kotlin_version = "<version>"
   repositories {
     mavenCentral()
   }
   dependencies {
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:<version>'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
@@ -71,7 +77,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:<version>'
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 ```
 
@@ -81,6 +87,7 @@ If you want to use a snapshot version (nightly build), first add out snapshot re
 
 ``` groovy
 buildscript {
+  ext.kotlin_version = "0.1-SNAPSHOT"
   repositories {
     mavenCentral()
     maven {
@@ -88,7 +95,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:0.1-SNAPSHOT'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
@@ -102,7 +109,7 @@ repositories {
 }
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:0.1-SNAPSHOT'
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 ```
 
